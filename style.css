@@ -12,10 +12,9 @@
     cursor: pointer;
 }
 
-.circ {
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    background-color: rgb(151, 146, 146);
-    border: 1px solid black;
+.actives {
+    background-color: rgb(49, 48, 48) !important;
+    color: white;
 }
+
+
