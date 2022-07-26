@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto Slab',
+}
+
+.ff:hover {
+    background-color: #f5f5f5 !important;
+    cursor: pointer;
+}
+
+.circ {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background-color: rgb(151, 146, 146);
+    border: 1px solid black;
+}
