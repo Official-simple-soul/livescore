@@ -39,25 +39,29 @@ function getData() {
 
 			let fixture = fixtures.map(data => {
 				            return `
-								<div class="col-md-2 col-2 border-top border-2 d-flex  align-items-center">
-										<p class="time-first  mx-4">${data.fixture.status.elapsed}'</p>
-								</div>
-								<div class="col-md-10 col-10 border-top border-2">
-									<div class="d-flex justify-content-between align-items-center my-1">
-										<div class="d-flex justify-content-start align-items-center my-1">
-											<img src="${data.teams.home.logo}" alt="" class="home-logo" width="40px">
-											<h5 class="home text-primary mx-3">${data.teams.home.name}</h5>
-										</div>	
-										<h5 class="home-score">${data.goals.home}</h5>
+							<div class="col-md-9 mx-auto ff">
+								<div class="row">
+									<div class="col-md-2 col-2 border-top border-2 d-flex  align-items-center">
+											<p class="time-first  mx-4">${data.fixture.status.elapsed}'</p>
 									</div>
-									<div class="d-flex justify-content-between align-items-center my-1">
-										<div class="d-flex justify-content-start align-items-center my-1">
-											<img src="${data.teams.away.logo}" alt="" class="away-logo" width="40px">
-											<h5 class="away text-success mx-3">${data.teams.away.name}</h5>
+									<div class="col-md-10 col-10 border-top border-2">
+										<div class="d-flex justify-content-between align-items-center my-1">
+											<div class="d-flex justify-content-start align-items-center my-1">
+												<img src="${data.teams.home.logo}" alt="" class="home-logo" width="40px">
+												<h5 class="home text-primary mx-3">${data.teams.home.name}</h5>
+											</div>	
+											<h5 class="home-score">${data.goals.home}</h5>
 										</div>
-										<h5 class="away-score">${data.goals.away}</h5>
+										<div class="d-flex justify-content-between align-items-center my-1">
+											<div class="d-flex justify-content-start align-items-center my-1">
+												<img src="${data.teams.away.logo}" alt="" class="away-logo" width="40px">
+												<h5 class="away text-success mx-3">${data.teams.away.name}</h5>
+											</div>
+											<h5 class="away-score">${data.goals.away}</h5>
+										</div>
 									</div>
 								</div>
+							</div>
 							`;
 				        }).join('');
 				        document.querySelector('.row').innerHTML = fixture;
