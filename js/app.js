@@ -19,7 +19,52 @@ let germany = document.querySelector('.germany');
 let france = document.querySelector('.france');
 let holland = document.querySelector('.holland');
 
+// SECTION TO BE DISPLAYED
+let premierLeague = document.querySelector('.baclays')
+let laLiga = document.querySelector('.liga')
+let serieA = document.querySelector('.serie')
+let Ligue = document.querySelector('.ligue')
+let bundesliga = document.querySelector('.bundesliga')
+let eredivisie = document.querySelector('.eredivisie')
+let links = document.querySelector('.tabs')
 
+links.forEach((button) => {
+	button.addEventListener(`click`, (e) => {
+		const selectedOption = e.currentTarget.classList;
+		if(selectedOption.contains(`baclaysTab`)) {
+			mainContent.forEach((cont) => {
+				cont.classList.remove(`show`);
+				premierLeague.classList.add(`show`);
+			})
+		} else if(selectedOption.contains(`ligaTab`)) {
+				mainContent.forEach((cont) => {
+				cont.classList.remove(`show`);
+				laLiga.classList.add(`show`);
+			})
+		} else if(selectedOption.contains(`bundesligaTab`)) {
+				mainContent.forEach((cont) => {
+				cont.classList.remove(`show`);
+				bundesliga.classList.add(`show`);
+			})
+		} else if(selectedOption.contains(`serieTab`)) {
+				mainContent.forEach((cont) => {
+				cont.classList.remove(`show`);
+				serieA.classList.add(`show`);
+			})
+		} else if(selectedOption.contains(`ligueTab`)) {
+				mainContent.forEach((cont) => {
+				cont.classList.remove(`show`);
+				Ligue.classList.add(`show`);
+			})
+		} else if(selectedOption.contains(`eredivisieTab`)) {
+				mainContent.forEach((cont) => {
+				cont.classList.remove(`show`);
+				eredevisie.classList.add(`show`);
+			})
+		}
+	})
+});
+// SECTION SELECTION ENDS HERE
 
 function getData() {
 	const options = {
@@ -64,7 +109,7 @@ function getData() {
 							</div>
 							`;
 				        }).join('');
-				        document.querySelector('.row').innerHTML = fixture;
+				        document.querySelector('.scores').innerHTML = fixture;
 						// console.log(data.goals.home)
 					})
 					.catch(err => {
@@ -120,7 +165,7 @@ all.addEventListener('click', () => {
 								</div>
 							`;
 				        }).join('');
-				        document.querySelector('.row').innerHTML = fixture;
+				        document.querySelector('.scores').innerHTML = fixture;
 						// console.log(data.goals.home)
 					})
 					.catch(err => {
@@ -189,7 +234,7 @@ finished.addEventListener('click', () => {
 								</div>
 							`;
 				        }).join('');
-				        document.querySelector('.row').innerHTML = fixture;
+				        document.querySelector('.scores').innerHTML = fixture;
 		})
 
 		all.classList.remove('actives');
@@ -244,7 +289,7 @@ coming.addEventListener('click', () => {
 						`;
 					}).join('');
 					
-					document.querySelector('.row').innerHTML = fixture;
+					document.querySelector('.scores').innerHTML = fixture;
 					// console.log(data.goals.home)
 		})
 
@@ -298,7 +343,7 @@ england.addEventListener('click', () => {
 							</div>
 						`;
 					}).join('');
-					document.querySelector('.row').innerHTML = fixture;
+					document.querySelector('.scores').innerHTML = fixture;
 					// console.log(data.goals.home)
 		})
 	});

@@ -17,4 +17,19 @@
     color: white;
 }
 
+body{
+    background-color: rgb(49, 48, 48) !important;
+    color: white;
+}
 
+.baclays, .liga, .ligue, .serie, .eredivisie, .bundesliga {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.sidebar .tabs {
+    cursor: pointer;
+}
