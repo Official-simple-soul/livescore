@@ -1,49 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;700&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto Slab',
+  font-family: 'Josefin Sans', sans-serif;
 }
 
-.ff:hover {
-    background-color: #f5f5f513 !important;
-    cursor: pointer;
-}
-
-.actives {
-    background-color: rgb(49, 48, 48) !important;
-    color: white;
+.container {
+  width: 60% !important;
+  margin: auto;
 }
 
 body{
-    background-color: rgb(49, 48, 48) !important;
-    color: white;
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.918), rgba(0, 0, 0, 0.918)), url('/img/background.jpg');
+    background-size: cover;
+    /* background-repeat: repeat; */
+    background-position: center;
+    height: 100vh;
+}
+.rowling, .rowling-fixture {
+    overflow: hidden;
+}
+.hover {
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+.hover:hover {
+    background-color: #f5f5f567;
+    cursor: pointer;
+    transform: scale(1.1);
 }
 
-.baclays, .liga, .ligue, .serie, .eredivisie, .bundesliga {
-    display: none;
+.cursour:hover {
+    cursor: pointer;
+    background-color: #f5f5f53a;
 }
 
-.show {
-    display: block;
+.all {
+    border-radius: 20px 20px 20px 20px !important;
+    transition: all 0.5s ease-in-out;
+    margin-bottom: 10px;
 }
 
-.sidebar .tabs {
+.all:hover {
+    cursor: pointer;
+    background-color: rgb(77, 77, 77) !important;
+    transform: translate(0, -5px);
+}
+
+
+
+.nav-hove a {
+    transition: all 0.5s ease-in-out;
+}
+
+.nav-hove a:hover {
     cursor: pointer;
 }
 
-.tabs:hover {
-    background-color: rgba(206, 207, 207, 0.671);
+.hidden {
+    display: none !important;
 }
 
-button {
-    box-shadow: 1px 1px 2px 2px rgba(216, 213, 213, 0.432);
-}
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100% !important;
+        padding: 0 !important;
+    }
 
-.sss {
-    background-color: rgb(49, 48, 48) !important;
-    color: white;
-    cursor: pointer;
+    .rowling {
+        transition: all 0.5s ease-in-out;
+        height: 100vh;
+    }
+
+    .show {
+        height: 0;
+    }
+
+    .mobile-hide {
+        display: none !important;
+    }
+
+    .hidden {
+        display: block !important;
+    }
 }
+    
+
