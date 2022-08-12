@@ -6,6 +6,7 @@ let rowling = document.querySelector('.rowling');
 // toggle menu
 menuBtn.addEventListener('click', function() {
 	rowling.classList.toggle('show');
+	menuBtn.classList.toggle('fa-xmark');
 } );
 
 // select one navbar item
@@ -43,13 +44,13 @@ function getData() {
 
 				            return `
 								<div class="col-md-12 col-12 shadow mb-3 border-2 hover px-2 select-league">
-									<div class="d-flex justify-content-between align-items-center my-1">
+									<button class="d-flex justify-content-between align-items-center my-1 border-0 bg-transparent w-100" onclick="clickMe(${data.league.id})">
 										<div class="d-flex justify-content-start align-items-center my-1">
 											<img src="${data.league.logo}" alt="" class="home-logo" width="30px">
 											<h5 class="home text-light mx-3" style="font-size: 13px">${data.league.name}</h5>
 										</div>	
-										<h5 class="home-score text-light league-id" onclick="clickMe(${data.league.id})" style="font-size: 13px">${data.league.id}</h5>
-									</div>
+										<h5 class="home-score text-light league-id d-none" style="font-size: 13px">${data.league.id}</h5>
+									</button>
 								</div>
 							`;
 				        }).join('');
@@ -63,6 +64,39 @@ function getData() {
 					
 }
 getData();
+
+// get other data
+function getMoreData() {
+	
+	fetch('https://api-football-v1.p.rapidapi.com/v3/leagues', options)
+		.then(response => response.json())
+		.then(data => {
+			let fixtures = data['response']
+			let splice = fixtures.splice(0, 100)
+			let fixture = splice.map(data => {
+
+				            return `
+								<div class="col-md-12 col-12 shadow mb-3 border-2 hover px-2 select-league">
+									<button class="d-flex justify-content-between align-items-center my-1 border-0 bg-transparent w-100" onclick="clickMe(${data.league.id})">
+										<div class="d-flex justify-content-start align-items-center my-1">
+											<img src="${data.league.logo}" alt="" class="home-logo" width="30px">
+											<h5 class="home text-light mx-3" style="font-size: 13px">${data.league.name}</h5>
+										</div>	
+										<h5 class="home-score text-light league-id d-none" style="font-size: 13px">${data.league.id}</h5>
+									</button>
+								</div>
+							`;
+				        }).join('');
+				        document.querySelector('.rowling').innerHTML = fixture;
+
+					})
+					.catch(err => {
+						console.log(err);
+					}
+					);
+					
+}
+getMoreData();
 
 // get fixtures
 function getFixtures() {
@@ -327,9 +361,9 @@ function getNextFixtures() {
 }
 
 // get fixtures by league id
-function getFixturesId() {
+function clickMe(id) {
 	
-	fetch('https://api-football-v1.p.rapidapi.com/v3/fixtures?league=39&season=2022', options)
+	fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${id}&season=2022`, options)
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
@@ -381,14 +415,14 @@ function getFixturesId() {
 							let score = document.querySelectorAll('.home-score');
 							score.forEach(score => {
 								if (score.innerHTML === 'null') {
-									score.innerHTML = '-';
+									score.innerHTML = '?';
 								}
 							}
 							);
 							let score2 = document.querySelectorAll('.away-score');
 							score2.forEach(score => {
 								if (score.innerHTML === 'null') {
-									score.innerHTML = '-';
+									score.innerHTML = '?';
 								}
 							}
 							);
@@ -397,10 +431,6 @@ function getFixturesId() {
 
 						
 }
-
-
-
-
 
 // switch between fixtures and live fixtures
 function switchFixtures() {
@@ -415,6 +445,9 @@ function switchFixtures() {
 	});
 	document.querySelector('.schedule').addEventListener('click', function() {
 		getNextFixtures();
+	});
+	document.querySelector('.more').addEventListener('click', function() {
+		getMoreData();
 	});
 }
 switchFixtures();
