@@ -80,6 +80,10 @@ button:focus {
     border-radius: 20px;
 }
 
+.hid {
+    display: none !important;
+}
+
 /* live change color */
 /* .lively {
     transition: all  ease-in-out;

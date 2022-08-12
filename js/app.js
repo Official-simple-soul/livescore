@@ -1,5 +1,6 @@
 let menuBtn = document.querySelector('.menu-btn');
 let rowling = document.querySelector('.rowling');
+let more = document.querySelector('.more');
 
 
 
@@ -7,6 +8,7 @@ let rowling = document.querySelector('.rowling');
 menuBtn.addEventListener('click', function() {
 	rowling.classList.toggle('show');
 	menuBtn.classList.toggle('fa-xmark');
+	more.classList.toggle('d-none');
 } );
 
 // window click event rowling display none
