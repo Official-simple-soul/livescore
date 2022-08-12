@@ -9,6 +9,15 @@ menuBtn.addEventListener('click', function() {
 	menuBtn.classList.toggle('fa-xmark');
 } );
 
+// window click event rowling display none
+window.addEventListener('click', function(e) {
+	if (e.target == rowling) {
+		rowling.classList.remove('show');
+		menuBtn.classList.remove('fa-xmark');
+	}
+} );
+
+
 // select one navbar item
 function selectNavbarItem() {
 	let navbarItems = document.querySelectorAll('.all');
@@ -190,7 +199,7 @@ function getLiveFixtures() {
 								</div>
 								<div class="col-md-12 col-12">
 									<div class="d-flex justify-content-between align-items-center my-0">
-										<p class="time text-danger my-0 mx-3" style="font-size: 11px">live</p>
+										<p class="time lively text-danger my-0 mx-3" style="font-size: 11px">live</p>
 										<p class="time text-danger my-0 mx-3" style="font-size: 11px">${data.fixture.status.elapsed}</p>
 									</div>
 								</div>

@@ -80,6 +80,24 @@ button:focus {
     border-radius: 20px;
 }
 
+/* live change color */
+/* .lively {
+    transition: all  ease-in-out;
+    animation: live 1s infinite;
+}
+
+@keyframes live {
+    0% {
+        color: black;
+    }
+    50% {
+        color: red;
+    }
+    100% {
+        color: blue;
+    }
+} */
+
 @media screen and (max-width: 450px) {
     .container {
         width: 100% !important;
