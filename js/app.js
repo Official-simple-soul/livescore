@@ -42,24 +42,25 @@ function getData() {
 			let fixture = splice.map(data => {
 
 				            return `
-								<div class="col-md-12 col-12 shadow mb-3 border-2 hover px-2">
+								<div class="col-md-12 col-12 shadow mb-3 border-2 hover px-2 select-league">
 									<div class="d-flex justify-content-between align-items-center my-1">
 										<div class="d-flex justify-content-start align-items-center my-1">
 											<img src="${data.league.logo}" alt="" class="home-logo" width="30px">
 											<h5 class="home text-light mx-3" style="font-size: 13px">${data.league.name}</h5>
 										</div>	
-										<h5 class="home-score text-light" style="font-size: 13px">${data.league.id}</h5>
+										<h5 class="home-score text-light league-id" onclick="clickMe(${data.league.id})" style="font-size: 13px">${data.league.id}</h5>
 									</div>
 								</div>
 							`;
 				        }).join('');
 				        document.querySelector('.rowling').innerHTML = fixture;
-						
+
 					})
 					.catch(err => {
 						console.log(err);
 					}
 					);
+					
 }
 getData();
 
@@ -141,7 +142,6 @@ function getLiveFixtures() {
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
-			console.log(fixtures);
 			let fixture = fixtures.map(data => {
 
 				            return `
@@ -326,6 +326,82 @@ function getNextFixtures() {
 						})
 }
 
+// get fixtures by league id
+function getFixturesId() {
+	
+	fetch('https://api-football-v1.p.rapidapi.com/v3/fixtures?league=39&season=2022', options)
+		.then(response => response.json())
+		.then(data => {
+			let fixtures = data['response']
+			console.log(fixtures);
+
+			let fixture = fixtures.map(data => {
+				// converting timestamp to local time
+				let date = new Date(data.fixture.timestamp * 1000);
+				let hours = date.getHours();
+				let minutes = "0" + date.getMinutes();
+				let formattedTime = hours + ':' + minutes.substr(-2);
+
+				// add am or pm
+				let ampm = hours >= 12 ? 'pm' : 'am';
+				formattedTime += ampm;
+				
+				            return `
+								<div class="col-md-12 col-12 cursour">
+									<div class="d-flex justify-content-between align-items-center my-0">
+										<div class="d-flex justify-content-start align-items-center my-1">
+											<img src="${data.teams.home.logo}" alt="" class="home-logo" width="30px">
+											<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.home.name}</h5>
+										</div>	
+										<h5 class="home-score" style="font-size: 14px">${data.score.fulltime.home}</h5>
+									</div>
+								</div>
+								<div class="col-md-12 col-12">
+									<div class="d-flex justify-content-between align-items-center my-0">
+
+										<p class="time text-danger my-0 mx-3" style="font-size: 11px">${formattedTime}</p>
+										<p class="time text-danger my-0 mx-3" style="font-size: 12px">${data.fixture.status.short}</p>
+									</div>
+								</div>
+								<div class="col-md-12 col-12  cursour border-bottom border-3">
+									<div class="d-flex justify-content-between align-items-center my-0">
+										<div class="d-flex justify-content-start align-items-center my-1">
+											<img src="${data.teams.away.logo}" alt="" class="home-logo" width="30px">
+											<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.away.name}</h5>
+										</div>	
+										<h5 class="away-score" style="font-size: 14px">${data.score.fulltime.away}</h5>
+									</div>
+								</div>
+
+							`;
+							}).join('');
+							document.querySelector('.rowling-fixture').innerHTML = fixture;
+
+							// fixtures conditions
+							let score = document.querySelectorAll('.home-score');
+							score.forEach(score => {
+								if (score.innerHTML === 'null') {
+									score.innerHTML = '-';
+								}
+							}
+							);
+							let score2 = document.querySelectorAll('.away-score');
+							score2.forEach(score => {
+								if (score.innerHTML === 'null') {
+									score.innerHTML = '-';
+								}
+							}
+							);
+
+							})
+
+						
+}
+
+
+
+
+
 // switch between fixtures and live fixtures
 function switchFixtures() {
 	document.querySelector('.all').addEventListener('click', function() {
@@ -335,7 +411,7 @@ function switchFixtures() {
 		getLiveFixtures();
 	});
 	document.querySelector('.finished').addEventListener('click', function() {
-		getFinishedFixtures();
+		getFixtures();
 	});
 	document.querySelector('.schedule').addEventListener('click', function() {
 		getNextFixtures();
