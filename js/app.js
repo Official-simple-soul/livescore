@@ -141,14 +141,8 @@ function getLiveFixtures() {
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
+			console.log(fixtures);
 			let fixture = fixtures.map(data => {
-
-				// converting period to minutes
-				let period = data.fixture.periods.first;
-				let period2 = data.fixture.periods.second;
-				let plus = period + period2;
-				let minutes = Math.floor(plus / 60000000);
-
 
 				            return `
 								<div class="col-md-12 col-12 cursour">
@@ -163,7 +157,7 @@ function getLiveFixtures() {
 								<div class="col-md-12 col-12">
 									<div class="d-flex justify-content-between align-items-center my-0">
 										<p class="time text-danger my-0 mx-3" style="font-size: 11px">live</p>
-										<p class="time text-danger my-0 mx-3" style="font-size: 11px">${minutes}</p>
+										<p class="time text-danger my-0 mx-3" style="font-size: 11px">${data.fixture.status.elapsed}</p>
 									</div>
 								</div>
 								<div class="col-md-12 col-12  cursour border-bottom border-3">
