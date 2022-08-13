@@ -524,7 +524,7 @@ switchFixtures();
 setTimeout(function() {
 	location.reload();
 }
-, 15000);
+, 150000);
 
 
 // head to head between two teams
