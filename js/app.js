@@ -234,6 +234,8 @@ function getLiveFixtures() {
 								}
 							}
 							);
+
+							// if live match is equal to null
 						})
 }
 getLiveFixtures();
@@ -462,3 +464,4 @@ function switchFixtures() {
 	});
 }
 switchFixtures();
+
