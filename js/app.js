@@ -521,10 +521,10 @@ function switchFixtures() {
 switchFixtures();
 
 // reload window after 5 seconds
-// setTimeout(function() {
-// 	location.reload();
-// }
-// , 15000);
+setTimeout(function() {
+	location.reload();
+}
+, 15000);
 
 
 // head to head between two teams
