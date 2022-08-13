@@ -117,47 +117,68 @@ function getFixtures() {
 		.then(data => {
 			let fixtures = data['response']
 
-			let fixture = fixtures.map(data => {
-				// converting timestamp to local time
-				let date = new Date(data.fixture.timestamp * 1000);
-				let hours = date.getHours();
-				let minutes = "0" + date.getMinutes();
-				let formattedTime = hours + ':' + minutes.substr(-2);
+			// group array by id
+			let groupBy = (array, key) => {
+				return array.reduce((objectsByKeyValue, obj) => {
+					const value = obj[key];
+					objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+					return objectsByKeyValue;
+				} ,{});
+			}
+			let grouped = groupBy(fixtures, 'league_id');
+			let fixture = Object.keys(grouped).map(function(key) {
+				return grouped[key];
+			}).map(function(item) {
+				console.log(item);
 
-				// add am or pm
-				let ampm = hours >= 12 ? 'pm' : 'am';
-				formattedTime += ampm;
-				
-				            return `
-								<div class="col-md-12 col-12 cursour">
-									<div class="d-flex justify-content-between align-items-center my-0">
-										<div class="d-flex justify-content-start align-items-center my-1">
-											<img src="${data.teams.home.logo}" alt="" class="home-logo" width="30px">
-											<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.home.name}</h5>
-										</div>	
-										<h5 class="home-score" style="font-size: 14px">${data.score.fulltime.home}</h5>
-									</div>
-								</div>
-								<div class="col-md-12 col-12">
-									<div class="d-flex justify-content-between align-items-center my-0">
+				// loop over array
+				let fixture = item.map(data => {
+					console.log(data);
+				return `
+				<div class="col-md-12 col-12 cursour">
+					<div class="row bg-dark">
+						<div class="col-lg-6 col-12">
+							<div class="d-flex justify-content-center align-items-center my-1">
+								<p class=" mx-3 text-light text-center mb-0">${data.league.country}</p>
+								<p class=" mx-3 text-light text-center mb-0">${data.league.name}</p>
+							</div>
+						</div>
+					</div>
+				<div class="d-flex justify-content-between align-items-center my-0">
+					<div class="d-flex justify-content-start align-items-center my-1">
+						<img src="${data.teams.home.logo}" alt="" class="home-logo" width="30px">
+						<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.home.name}</h5>
+					</div>	
+					<h5 class="home-score" style="font-size: 14px">${data.score.fulltime.home}</h5>
+				</div>
+			</div>
+			<div class="col-md-12 col-12">
+				<div class="d-flex justify-content-between align-items-center my-0">
 
-										<p class="time text-danger my-0 mx-3" style="font-size: 11px">${formattedTime}</p>
-										<p class="time text-danger my-0 mx-3" style="font-size: 12px">${data.fixture.status.short}</p>
-									</div>
-								</div>
-								<div class="col-md-12 col-12  cursour border-bottom border-3">
-									<div class="d-flex justify-content-between align-items-center my-0">
-										<div class="d-flex justify-content-start align-items-center my-1">
-											<img src="${data.teams.away.logo}" alt="" class="home-logo" width="30px">
-											<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.away.name}</h5>
-										</div>	
-										<h5 class="away-score" style="font-size: 14px">${data.score.fulltime.away}</h5>
-									</div>
-								</div>
+					<p class="time text-danger my-0 mx-3" style="font-size: 11px">${data.fixture.status.short}</p>
+					<p class="time text-danger my-0 mx-3" style="font-size: 12px">${data.fixture.status.short}</p>
+				</div>
+			</div>
+			<div class="col-md-12 col-12  cursour border-bottom border-3">
+				<div class="d-flex justify-content-between align-items-center my-0">
+					<div class="d-flex justify-content-start align-items-center my-1">
+						<img src="${data.teams.away.logo}" alt="" class="home-logo" width="30px">
+						<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.away.name}</h5>
+					</div>	
+					<h5 class="away-score" style="font-size: 14px">${data.score.fulltime.away}</h5>
+				</div>
+			</div>
+				`;
+			})
+			return fixture.join('');
 
-							`;
-							}).join('');
-							document.querySelector('.rowling-fixture').innerHTML = fixture;
+		
+		
+		
+		}).join('');
+		document.querySelector('.rowling-fixture').innerHTML = fixture;
+
+			
 
 							// fixtures conditions
 							let score = document.querySelectorAll('.home-score');
@@ -180,6 +201,8 @@ function getFixtures() {
 						
 }
 
+// getFixtures();
+
 // get live fixtures
 function getLiveFixtures() {
 	
@@ -187,10 +210,32 @@ function getLiveFixtures() {
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
+
+			let groupBy = (array, key) => {
+				return array.reduce((objectsByKeyValue, obj) => {
+					const value = obj[key];
+					objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+					return objectsByKeyValue;
+				} ,{});
+			}
+			let grouped = groupBy(fixtures, 'league_id');
+			let fixture = Object.keys(grouped).map(function(key) {
+				return grouped[key];
+			}).map(function(item) {
+				console.log(item);
+
 			let fixture = fixtures.map(data => {
 
 				            return `
 								<div class="col-md-12 col-12 cursour">
+									<div class="row bg-dark">
+										<div class="col-lg-6 col-12">
+											<div class="d-flex justify-content-center align-items-center my-1">
+												<p class=" mx-3 text-light text-center mb-0">${data.league.country}</p>
+												<p class=" mx-3 text-light text-center mb-0">${data.league.name}</p>
+											</div>
+										</div>
+									</div>
 									<div class="d-flex justify-content-between align-items-center my-1">
 										<div class="d-flex justify-content-start align-items-center my-1">
 											<img src="${data.teams.home.logo}" alt="" class="home-logo" width="30px">
@@ -216,7 +261,10 @@ function getLiveFixtures() {
 								</div>
 
 							`;
-							}).join('');
+			})
+			return fixture.join('');
+			
+						}).join('');
 							document.querySelector('.rowling-fixture').innerHTML = fixture;
 
 							// conditions for live fixtures
@@ -234,6 +282,8 @@ function getLiveFixtures() {
 								}
 							}
 							);
+
+							// if live match is equal to null
 						})
 }
 getLiveFixtures();
@@ -462,3 +512,4 @@ function switchFixtures() {
 	});
 }
 switchFixtures();
+
