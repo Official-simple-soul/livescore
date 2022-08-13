@@ -7,8 +7,8 @@
   font-family: 'Josefin Sans', sans-serif;
 }
 
-:root {
-    --var : rgb(77, 77, 77);
+body {
+    overflow: scroll !important;
 }
 
 .container {
@@ -19,7 +19,6 @@
 body{
     background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.918), rgba(0, 0, 0, 0.918)), url('/img/background.jpg');
     background-size: cover;
-    /* background-repeat: repeat; */
     background-position: center;
     height: 100vh;
 }
@@ -84,29 +83,18 @@ button:focus {
     display: none !important;
 }
 
-/* live change color */
-/* .lively {
-    transition: all  ease-in-out;
-    animation: live 1s infinite;
+.chng{
+    right: 15px;
+    bottom: 18px;
 }
 
-@keyframes live {
-    0% {
-        color: black;
-    }
-    50% {
-        color: red;
-    }
-    100% {
-        color: blue;
-    }
-} */
 
 @media screen and (max-width: 450px) {
     .container {
         width: 100% !important;
         padding: 0 !important;
     }
+
 
     .rowling {
         transition: all 0.5s ease-in-out;
@@ -124,6 +112,7 @@ button:focus {
     .hidden {
         display: block !important;
     }
+
 }
 
 @media screen and (max-width: 850px) {

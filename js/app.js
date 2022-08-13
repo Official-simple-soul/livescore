@@ -112,7 +112,7 @@ getMoreData();
 // get fixtures
 function getFixtures() {
 	
-	fetch('https://api-football-v1.p.rapidapi.com/v3/fixtures?date=2021-04-07', options)
+	fetch('https://api-football-v1.p.rapidapi.com/v3/fixtures?date=2022-08-13', options)
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
@@ -133,14 +133,24 @@ function getFixtures() {
 
 				// loop over array
 				let fixture = item.map(data => {
-					console.log(data);
+
+					// converting timestamp to local time
+				let date = new Date(data.fixture.timestamp * 1000);
+				let hours = date.getHours();
+				let minutes = "0" + date.getMinutes();
+				let formattedTime = hours + ':' + minutes.substr(-2);
+
+				// add am or pm
+				let ampm = hours >= 12 ? 'pm' : 'am';
+				formattedTime += ampm;
+
 				return `
 				<div class="col-md-12 col-12 cursour">
 					<div class="row bg-dark">
-						<div class="col-lg-6 col-12">
-							<div class="d-flex justify-content-center align-items-center my-1">
+						<div class="col-lg-12 col-12">
+							<div class="d-flex justify-content-between align-items-center my-1">
 								<p class=" mx-3 text-light text-center mb-0">${data.league.country}</p>
-								<p class=" mx-3 text-light text-center mb-0">${data.league.name}</p>
+								<p class=" mx-3 text-light text-center mb-0">${data.league.name}</p><p class=" mx-3 text-light text-center mb-0">${data.fixture.date}</p>
 							</div>
 						</div>
 					</div>
@@ -155,7 +165,7 @@ function getFixtures() {
 			<div class="col-md-12 col-12">
 				<div class="d-flex justify-content-between align-items-center my-0">
 
-					<p class="time text-danger my-0 mx-3" style="font-size: 11px">${data.fixture.status.short}</p>
+					<p class="time text-danger my-0 mx-3" style="font-size: 11px">${formattedTime}</p>
 					<p class="time text-danger my-0 mx-3" style="font-size: 12px">${data.fixture.status.short}</p>
 				</div>
 			</div>
@@ -227,38 +237,38 @@ function getLiveFixtures() {
 			let fixture = fixtures.map(data => {
 
 				            return `
-								<div class="col-md-12 col-12 cursour">
+								<div class="col-md-12 col-12 px-0">
 									<div class="row bg-dark">
-										<div class="col-lg-6 col-12">
-											<div class="d-flex justify-content-center align-items-center my-1">
-												<p class=" mx-3 text-light text-center mb-0">${data.league.country}</p>
-												<p class=" mx-3 text-light text-center mb-0">${data.league.name}</p>
+										<div class="col-lg-12 col-12">
+											<div class="d-flex justify-content-between align-items-center my-1">
+												<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.league.country}</p>
+												<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.league.name}</p>
 											</div>
 										</div>
 									</div>
-									<div class="d-flex justify-content-between align-items-center my-1">
-										<div class="d-flex justify-content-start align-items-center my-1">
-											<img src="${data.teams.home.logo}" alt="" class="home-logo" width="30px">
-											<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.home.name}</h5>
-										</div>	
-										<h5 class="home-score-live text-danger fw-bold" style="font-size: 13px">${data.goals.home}</h5>
+									<div class="col-md-12 col-12 cursour">
+										<div class="col-md-12 col-12">
+											<div class="d-flex justify-content-between align-items-center my-1">
+												<div class="d-flex justify-content-start align-items-center my-1">
+													<img src="${data.teams.home.logo}" alt="" class="home-logo" width="15px">
+													<h5 class="home text-light mx-3 my-0" style="font-size: 13px">${data.teams.home.name}</h5>
+												</div>	
+												<h5 class="home-score-live text-danger fw-bold my-0" style="font-size: 13px">${data.goals.home}</h5>
+											</div>
+										</div>
+										<div class="col-md-12 col-12 border-3">
+											<p class="time text-danger my-0 mx-3 position-absolute chng" style="font-size: 11px"><span class="px-2">Live</span>${data.fixture.status.elapsed}'</p>
+											<div class="d-flex justify-content-between align-items-center my-1">
+												<div class="d-flex justify-content-start align-items-center my-1">
+													<img src="${data.teams.away.logo}" alt="" class="home-logo" width="15px">
+													<h5 class="home text-light mx-3 my-0" style="font-size: 13px">${data.teams.away.name}</h5>
+												</div>	
+												<h5 class="away-score-live text-danger fw-bold my-0" style="font-size: 13px">${data.goals.away}</h5>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-12 col-12">
-									<div class="d-flex justify-content-between align-items-center my-0">
-										<p class="time lively text-danger my-0 mx-3" style="font-size: 11px">live</p>
-										<p class="time text-danger my-0 mx-3" style="font-size: 11px">${data.fixture.status.elapsed}</p>
-									</div>
-								</div>
-								<div class="col-md-12 col-12  cursour border-bottom border-3">
-									<div class="d-flex justify-content-between align-items-center my-1">
-										<div class="d-flex justify-content-start align-items-center my-1">
-											<img src="${data.teams.away.logo}" alt="" class="home-logo" width="30px">
-											<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.away.name}</h5>
-										</div>	
-										<h5 class="away-score-live text-danger fw-bold" style="font-size: 13px">${data.goals.away}</h5>
-									</div>
-								</div>
+								
 
 							`;
 			})
@@ -422,7 +432,7 @@ function getNextFixtures() {
 }
 
 // get fixtures by league id
-function clickMe(id) {
+function clickMe(id) { style="fonst-size: 11px;"
 	
 	fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${id}&season=2022`, options)
 		.then(response => response.json())
@@ -512,4 +522,10 @@ function switchFixtures() {
 	});
 }
 switchFixtures();
+
+// reload window after 5 seconds
+setTimeout(function() {
+	location.reload();
+}
+, 15000);
 
