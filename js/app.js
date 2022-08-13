@@ -129,7 +129,6 @@ function getFixtures() {
 			let fixture = Object.keys(grouped).map(function(key) {
 				return grouped[key];
 			}).map(function(item) {
-				console.log(item);
 
 				// loop over array
 				let fixture = item.map(data => {
@@ -150,7 +149,7 @@ function getFixtures() {
 						<div class="col-lg-12 col-12">
 							<div class="d-flex justify-content-between align-items-center my-1">
 								<p class=" mx-3 text-light text-center mb-0">${data.league.country}</p>
-								<p class=" mx-3 text-light text-center mb-0">${data.league.name}</p><p class=" mx-3 text-light text-center mb-0">${data.fixture.date}</p>
+								<p class=" mx-3 text-light text-center mb-0">${data.league.name}</p>
 							</div>
 						</div>
 					</div>
@@ -232,10 +231,9 @@ function getLiveFixtures() {
 			let fixture = Object.keys(grouped).map(function(key) {
 				return grouped[key];
 			}).map(function(item) {
-				console.log(item);
 
-			let fixture = fixtures.map(data => {
-
+			let fixture = item.map(data => {
+						// console.log(data.fixture.id);
 				            return `
 								<div class="col-md-12 col-12 px-0">
 									<div class="row bg-dark">
@@ -246,7 +244,7 @@ function getLiveFixtures() {
 											</div>
 										</div>
 									</div>
-									<div class="col-md-12 col-12 cursour">
+									<div class="col-md-12 col-12 cursour" onclick="checkStat(${data.fixture.id})">
 										<div class="col-md-12 col-12">
 											<div class="d-flex justify-content-between align-items-center my-1">
 												<div class="d-flex justify-content-start align-items-center my-1">
@@ -432,13 +430,12 @@ function getNextFixtures() {
 }
 
 // get fixtures by league id
-function clickMe(id) { style="fonst-size: 11px;"
+function clickMe(id) {
 	
 	fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${id}&season=2022`, options)
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
-			console.log(fixtures);
 
 			let fixture = fixtures.map(data => {
 				// converting timestamp to local time
@@ -524,8 +521,93 @@ function switchFixtures() {
 switchFixtures();
 
 // reload window after 5 seconds
-setTimeout(function() {
-	location.reload();
-}
-, 15000);
+// setTimeout(function() {
+// 	location.reload();
+// }
+// , 15000);
 
+
+// head to head between two teams
+function checkStat(id) {
+	fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures/statistics?fixture=${id}`, options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+
+	console.log('hello');
+	console.log(id);
+}
+// checkStat();
+// matchStat();
+
+
+// get fixtures by league id
+// function checkStat(id) {
+// 	console.log(id);
+// 	console.log('liked');
+// 	// fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?league=${id}&season=2022`, options)
+// 	// 	.then(response => response.json())
+// 	// 	.then(data => {
+// 	// 		let fixtures = data['response']
+
+// 	// 		let fixture = fixtures.map(data => {
+// 	// 			// converting timestamp to local time
+// 	// 			let date = new Date(data.fixture.timestamp * 1000);
+// 	// 			let hours = date.getHours();
+// 	// 			let minutes = "0" + date.getMinutes();
+// 	// 			let formattedTime = hours + ':' + minutes.substr(-2);
+
+// 	// 			// add am or pm
+// 	// 			let ampm = hours >= 12 ? 'pm' : 'am';
+// 	// 			formattedTime += ampm;
+				
+// 	// 			            return `
+// 	// 							<div class="col-md-12 col-12 cursour">
+// 	// 								<div class="d-flex justify-content-between align-items-center my-0">
+// 	// 									<div class="d-flex justify-content-start align-items-center my-1">
+// 	// 										<img src="${data.teams.home.logo}" alt="" class="home-logo" width="30px">
+// 	// 										<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.home.name}</h5>
+// 	// 									</div>	
+// 	// 									<h5 class="home-score" style="font-size: 14px">${data.score.fulltime.home}</h5>
+// 	// 								</div>
+// 	// 							</div>
+// 	// 							<div class="col-md-12 col-12">
+// 	// 								<div class="d-flex justify-content-between align-items-center my-0">
+
+// 	// 									<p class="time text-danger my-0 mx-3" style="font-size: 11px">${formattedTime}</p>
+// 	// 									<p class="time text-danger my-0 mx-3" style="font-size: 12px">${data.fixture.status.short}</p>
+// 	// 								</div>
+// 	// 							</div>
+// 	// 							<div class="col-md-12 col-12  cursour border-bottom border-3">
+// 	// 								<div class="d-flex justify-content-between align-items-center my-0">
+// 	// 									<div class="d-flex justify-content-start align-items-center my-1">
+// 	// 										<img src="${data.teams.away.logo}" alt="" class="home-logo" width="30px">
+// 	// 										<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.away.name}</h5>
+// 	// 									</div>	
+// 	// 									<h5 class="away-score" style="font-size: 14px">${data.score.fulltime.away}</h5>
+// 	// 								</div>
+// 	// 							</div>
+
+// 	// 						`;
+// 	// 						}).join('');
+// 	// 						document.querySelector('.rowling-fixture').innerHTML = fixture;
+
+// 	// 						// fixtures conditions
+// 	// 						let score = document.querySelectorAll('.home-score');
+// 	// 						score.forEach(score => {
+// 	// 							if (score.innerHTML === 'null') {
+// 	// 								score.innerHTML = '?';
+// 	// 							}
+// 	// 						}
+// 	// 						);
+// 	// 						let score2 = document.querySelectorAll('.away-score');
+// 	// 						score2.forEach(score => {
+// 	// 							if (score.innerHTML === 'null') {
+// 	// 								score.innerHTML = '?';
+// 	// 							}
+// 	// 						}
+// 	// 						);
+
+// 	// 						})
+
+						
+// }
