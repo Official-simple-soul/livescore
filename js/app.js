@@ -1,7 +1,11 @@
 let menuBtn = document.querySelector('.menu-btn');
 let rowling = document.querySelector('.rowling');
 let more = document.querySelector('.more');
-
+let england = document.querySelector(".rowling-england");
+let spain = document.querySelector(".rowling-spain");
+let germany = document.querySelector(".rowling-germany");
+let france = document.querySelector(".rowling-france");
+let italy = document.querySelector(".rowling-italy");
 
 
 // toggle menu
@@ -504,15 +508,40 @@ function clickMe(id) {
 function switchFixtures() {
 	document.querySelector('.all').addEventListener('click', function() {
 		getFixtures();
+
+		england.classList.add('d-none');
+		spain.classList.add('d-none');
+		germany.classList.add('d-none');
+		france.classList.add('d-none');
+		italy.classList.add('d-none');
+		
 	});
 	document.querySelector('.live').addEventListener('click', function() {
 		getLiveFixtures();
+
+		england.classList.remove('d-none');
+		spain.classList.remove('d-none');
+		germany.classList.remove('d-none');
+		france.classList.remove('d-none');
+		italy.classList.remove('d-none');
 	});
 	document.querySelector('.finished').addEventListener('click', function() {
 		getFixtures();
+
+		england.classList.add('d-none');
+		spain.classList.add('d-none');
+		germany.classList.add('d-none');
+		france.classList.add('d-none');
+		italy.classList.add('d-none');
 	});
 	document.querySelector('.schedule').addEventListener('click', function() {
 		getNextFixtures();
+
+		england.classList.add('d-none');
+		spain.classList.add('d-none');
+		germany.classList.add('d-none');
+		france.classList.add('d-none');
+		italy.classList.add('d-none');
 	});
 	document.querySelector('.more').addEventListener('click', function() {
 		getMoreData();
@@ -540,7 +569,6 @@ function checkStat(id) {
 // matchStat();
 
 
-
 // premier league
 function getLiveFixturesEngland() {
 	
@@ -562,7 +590,6 @@ function getLiveFixturesEngland() {
 			}).map(function(item) {
 				let splice = item.splice(0, 10);
 			let fixture = splice.map(data => {
-						console.log(data.teams.home.name);
 				            return `
 								<div class="col-md-12 col-12 px-0">
 									<div class="row bg-dark">
@@ -645,7 +672,6 @@ function getLiveFixturesSpain() {
 			}).map(function(item) {
 				let splice = item.splice(0, 10);
 			let fixture = splice.map(data => {
-						console.log(data.teams.home.name);
 				            return `
 								<div class="col-md-12 col-12 px-0">
 									<div class="row bg-dark">
@@ -728,7 +754,6 @@ function getLiveFixturesGermany() {
 			}).map(function(item) {
 				let splice = item.splice(0, 10);
 			let fixture = splice.map(data => {
-						console.log(data.teams.home.name);
 				            return `
 								<div class="col-md-12 col-12 px-0">
 									<div class="row bg-dark">
@@ -811,7 +836,6 @@ function getLiveFixturesFrance() {
 			}).map(function(item) {
 				let splice = item.splice(0, 10);
 			let fixture = splice.map(data => {
-						console.log(data.teams.home.name);
 				            return `
 								<div class="col-md-12 col-12 px-0">
 									<div class="row bg-dark">
@@ -894,7 +918,6 @@ function getLiveFixturesItaly() {
 			}).map(function(item) {
 				let splice = item.splice(0, 10);
 			let fixture = splice.map(data => {
-						console.log(data.teams.home.name);
 				            return `
 								<div class="col-md-12 col-12 px-0">
 									<div class="row bg-dark">
