@@ -223,6 +223,7 @@ function getLiveFixtures() {
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
+			console.log(fixtures);
 
 			let groupBy = (array, key) => {
 				return array.reduce((objectsByKeyValue, obj) => {
@@ -558,16 +559,14 @@ setTimeout(function() {
 
 // head to head between two teams
 function checkStat(id) {
-	fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures/statistics?fixture=${id}`, options)
+	fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?id=${id}`, options)
 	.then(response => response.json())
-	// .then(response => console.log(response))
-
-	// console.log('hello');
-	// console.log(id);
+	.then(data => 
+		{
+			localStorage.setItem('stat', JSON.stringify(data));
+			window.location.href = 'stat.html';
+		});
 }
-// checkStat();
-// matchStat();
-
 
 // premier league
 function getLiveFixturesEngland() {

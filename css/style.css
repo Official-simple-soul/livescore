@@ -115,6 +115,7 @@ button:focus {
 
 }
 
+
 @media screen and (max-width: 850px) {
     .container {
         width: 100% !important;
@@ -122,4 +123,6 @@ button:focus {
     }
 }
     
+
+
 
