@@ -277,8 +277,8 @@ function getCoach() {
 function switchStat() {
 	document.querySelector('.stat').addEventListener('click', function() {
 		getStat();
-        document.querySelector('.sub').style.display = 'none';
-        document.querySelector('.coach').style.display = 'none';
+        document.querySelector('.sub').classList.add('d-none');
+        document.querySelector('.coach').classList.add('d-none');
 	});
 	document.querySelector('.lineup').addEventListener('click', function() {
 		getLineups();
