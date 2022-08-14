@@ -1,9 +1,7 @@
 function getDetails() {
     let newObject = localStorage.getItem('stat')
-    console.log(newObject);
     let posts = JSON.parse(newObject)
     let data = posts['response']
-    console.log(data)
 
     let statistics = ''
         
@@ -45,10 +43,8 @@ getDetails();
 // get statistics
 function getStat() {
     let newObject = localStorage.getItem('stat')
-    console.log(newObject);
     let posts = JSON.parse(newObject)
     let data = posts['response']
-    console.log(data)
 
                     let statistics2 = ''
 
@@ -145,7 +141,7 @@ function getStat() {
                     </div>
                     `;
 
-                    document.querySelector('.get-stat-2').innerHTML = statistics2;
+                    document.querySelector('.line-up').innerHTML = statistics2;
 
                     // if innerHTML is null, then display '-'
                     const ifNull = document.querySelectorAll('.if-null');
@@ -156,71 +152,113 @@ function getStat() {
                     });
 
 }
-// getStat();
+getStat();
 
 // get lineups
 
 function getLineups() {
     let newObject = localStorage.getItem('stat')
-    console.log(newObject);
     let posts = JSON.parse(newObject)
     let data = posts['response']
-    console.log(data)
-    // console.log(data[0].lineups[1].startXI[0].player.number)
-    // console.log(data[0].lineups[1].startXI[0].player.name)
-    // console.log(data[0].lineups[1].startXI[0].player.pos)
-    // console.log(data[0].lineups[0].startXI[0].player.pos)
-    // console.log(data[0].lineups[0].startXI[0].player.name)
-    // console.log(data[0].lineups[0].startXI[0].player.number)
-    // console.log(data[0].lineups[1].startXI[1].player.number)
-    // console.log(data[0].lineups[1].startXI[1].player.name)
-    // console.log(data[0].lineups[1].startXI[1].player.pos)
-    // console.log(data[0].lineups[0].startXI[1].player.pos)
-    // console.log(data[0].lineups[0].startXI[1].player.name)
-    // console.log(data[0].lineups[0].startXI[1].player.number)
-
+    // console.log(data)
     // loop over the starting ineup and get the player name and number
     let startXI = data[0].lineups[0].startXI;
     let startXI2 = data[0].lineups[1].startXI;
+    let playerImage = data[0].players[0].players;
+    let playerImage2 = data[0].players[1].players;
+
     let startingXI = '';
-    let startingXI2 = '';
     for (let i = 0; i < startXI.length; i++) {
         startingXI += `
-        <div class="col-6">
-            <div class="shadow d-flex justify-content-start align-items-center py-1 px-0 mx-0 border-bottom my-1">
+        <div class="col-6  border-bottom border-right">
+            <div class="d-flex justify-content-center align-items-center py-1 px-0 mx-0 my-1">
                 <p class="text-dark mb-0 if-null homes" style="font-size: 14px;">${startXI[i].player.number}. </p>
+                <img src="${playerImage[i].player.photo}" alt="" class="rounded mx-4" width="30px">
+                <p class="text-dark mb-0 if-null homes" style="font-size: 14px;">${startXI[i].player.pos}.</p>
+            </div>
                 <p class="possession text-dark mb-0" style="font-size: 14px;">${startXI[i].player.name}</p>
-            </div>
         </div>
-        <div class="col-6">
-            <div class="shadow d-flex justify-content-start align-items-center py-1 px-0 mx-0 border-bottom my-1">
-                <p class="text-dark mb-0 if-null homes" style="font-size: 14px;">${startXI2[i].player.number}. </p>
-                <p class="possession text-dark mb-0" style="font-size: 14px;">${startXI2[i].player.name}</p>
+        <div class="col-6 border-bottom">
+            <div class="d-flex justify-content-center align-items-center py-1 px-0 mx-0 my-1">
+                <p class="text-dark mb-0 if-null homes" style="font-size: 14px;">${startXI2[i].player.number}.</p>
+                <img src="${playerImage2[i].player.photo}" alt="" class="rounded mx-4" width="30px">
+                <p class="text-dark mb-0 if-null homes" style="font-size: 14px;">${startXI2[i].player.pos}.</p>
             </div>
+                <p class="possession text-dark mb-0" style="font-size: 14px;">${startXI2[i].player.name}</p>
         </div>
         `;
     }
     document.querySelector('.line-up').innerHTML = startingXI;
 }
-getLineups();
-
-//     let lineups = data.map(item => {
-//         console.log(item.lineups.startXI[0].player.name)
-//     // lineups +=
-//     // return `
-    
-//     //                 <div class="home text-center">
-//     //                     <p class="text-dark mb-0" style="font-size: 13px"><span class="">${item.lineups.startXI[0].player.number}</span>
-//     //                     <span class="mx-2">${item.lineups.startXI[0].player.name}</span>
-//     //                     <span class="">(${item.lineups.startXI[0].player.pos})</span></p>
-//     //                 </div>
-                    
-//     //                 `}).join('');
-
-//     // document.querySelector('.line-up').innerHTML = lineups;
-// })}
 // getLineups();
 
+// get substitutions
+function getSubs() {
+    let newObject = localStorage.getItem('stat')
+    let posts = JSON.parse(newObject)
+    let data = posts['response']
+
+    let startXI = data[0].lineups[0].substitutes;
+    let startXI2 = data[0].lineups[1].substitutes;
+    let playerImage = data[0].players[0].players;
+    let playerImage2 = data[0].players[1].players;
+    let splice1 = playerImage.splice(11, playerImage.length);
+    let splice2 = playerImage.splice(11, playerImage2.length);
+    console.log(splice1);
+
+    let startingXI = '';
+    for (let i = 0; i < startXI.length; i++) {
+        startingXI += `
+        <div class="col-6  border-bottom border-right">
+            <div class="d-flex justify-content-center align-items-center py-1 px-0 mx-0 my-1">
+                <p class="text-dark mb-0 if-null homes mx-2" style="font-size: 14px;">${startXI[i].player.number}. </p>
+                <p class="text-dark mb-0 if-null homes mx-2" style="font-size: 14px;">${startXI[i].player.pos}.</p>
+            </div>
+                <p class="possession text-dark mb-0" style="font-size: 14px;">${startXI[i].player.name}</p>
+        </div>
+        <div class="col-6 border-bottom">
+            <div class="d-flex justify-content-center align-items-center py-1 px-0 mx-0 my-1">
+                <p class="text-dark mb-0 if-null homes mx-2" style="font-size: 14px;">${startXI2[i].player.number}.</p>
+                <p class="text-dark mb-0 if-null homes mx-2" style="font-size: 14px;">${startXI2[i].player.pos}.</p>
+            </div>
+                <p class="possession text-dark mb-0" style="font-size: 14px;">${startXI2[i].player.name}</p>
+        </div>
+        `;
+    }
+    document.querySelector('.line-up-sub').innerHTML = startingXI;
+}
+// getSubs();
+
+// get coach
+function getCoach() {
+    let newObject = localStorage.getItem('stat')
+    let posts = JSON.parse(newObject)
+    let data = posts['response']
+    console.log(data)
+    // loop over the starting ineup and get the player name and number
+    let startXI = data[0].lineups[0].coach;
+    let startXI2 = data[0].lineups[1].coach;
+    console.log(startXI);
+
+    let startingXI = '';
+
+        startingXI += `
+        <div class="col-6 border-right">
+            <div class="d-flex justify-content-center align-items-center py-1 px-0 mx-0 my-1">
+                <img src="${startXI.photo}" alt="" class="rounded mx-4" width="30px">
+            </div>
+                <p class="possession text-dark mb-0" style="font-size: 14px;">${startXI.name}</p>
+        </div>
+        <div class="col-6">
+            <div class="d-flex justify-content-center align-items-center py-1 px-0 mx-0 my-1">
+                <img src="${startXI2.photo}" alt="" class="rounded mx-4" width="30px">
+            </div>
+                <p class="possession text-dark mb-0" style="font-size: 14px;">${startXI2.name}</p>
+        </div>
+        `;
+    document.querySelector('.line-up-coach').innerHTML = startingXI;
+}
+// getCoach();
 
 
 
@@ -229,8 +267,47 @@ getLineups();
 
 
 
-/* <div class="away text-center">
-<p class="text-dark mb-0" style="font-size: 13px"><span class="">${data[0].lineups[1].startXI[0].player.number}</span>
-<span class="mx-2">${data[0].lineups[1].startXI[0].player.name}</span>
-<span class="">(${data[0].lineups[1].startXI[0].player.pos})</span></p>
-</div> */
+
+
+
+
+
+
+// switch betweem stats and lineups
+function switchStat() {
+	document.querySelector('.stat').addEventListener('click', function() {
+		getStat();
+        document.querySelector('.sub').style.display = 'none';
+        document.querySelector('.coach').style.display = 'none';
+	});
+	document.querySelector('.lineup').addEventListener('click', function() {
+		getLineups();
+        getSubs();
+        getCoach();
+        document.querySelector('.sub').classList.remove('d-none');
+        document.querySelector('.coach').classList.remove('d-none');
+	});
+}
+switchStat();
+
+// select one menu at a time using for each
+function selectOne() {
+    document.querySelectorAll('.tic').forEach(item => {
+        item.addEventListener('click', function() {
+            document.querySelectorAll('.tic').forEach(item => {
+                item.classList.remove('active-stat');
+            });
+            this.classList.add('active-stat');
+        } );
+    } );
+}
+selectOne();
+
+
+
+
+
+
+
+
+

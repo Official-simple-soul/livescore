@@ -2,13 +2,16 @@
 
 .tic {
     font-weight: 700 !important;
+    cursor: pointer;
 }
 
 .line-up-bg {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/img/background.jpg');
     background-size: cover;
     background-position: center;
-
     width: 100%;
-    /* height: 300px; */
+}
+
+.active-stat {
+    border: 1px solid white !important;
 }
