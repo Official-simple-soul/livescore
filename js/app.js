@@ -564,7 +564,9 @@ function checkStat(id) {
 	.then(data => 
 		{
 			localStorage.setItem('stat', JSON.stringify(data));
-			window.location.href = 'stat.html';
+			// window.location.href = 'stat.html';
+			// target blank
+			window.open('stat.html', '_blank');
 		});
 }
 
