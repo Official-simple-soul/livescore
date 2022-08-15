@@ -1,3 +1,15 @@
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'aa9fe9fa58msh53c01e7eb8c954ap12c810jsn1571c226b0f4',
+		'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+	}
+};
+
+
+
+
+
 function getDetails() {
     let newObject = localStorage.getItem('stat')
     let posts = JSON.parse(newObject)
@@ -12,7 +24,7 @@ function getDetails() {
                                         <img src="${data[0].teams.home.logo}" alt="" class="bg-dark mb-1 rounded p-2" width="40px">
                                     </div>
                                     <div class="text">
-                                        <h5 class="my-0 text-dark" style="font-size: 14px">${data[0].teams.home.name}</h5>
+                                        <h5 class="my-0 text-dark table-home" style="font-size: 14px">${data[0].teams.home.name}</h5>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -29,7 +41,8 @@ function getDetails() {
                                         <img src="${data[0].teams.away.logo}" alt="" class="bg-dark mb-1 rounded p-2" width="40px">
                                     </div>
                                     <div class="text">
-                                        <h5 class="my-0 text-dark" style="font-size: 14px">${data[0].teams.away.name}</h5>
+                                        <h5 class="my-0 text-dark  table-away" style="font-size: 14px">${data[0].teams.away.name}</h5>
+                                        <h5 class="my-0 text-dark league-id d-none" style="font-size: 14px">${data[0].league.id}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +168,6 @@ function getStat() {
 // getStat();
 
 // get lineups
-
 function getLineups() {
     let newObject = localStorage.getItem('stat')
     let posts = JSON.parse(newObject)
@@ -200,14 +212,9 @@ function getSubs() {
 
     let startXI = data[0].lineups[0].substitutes;
     let startXI2 = data[0].lineups[1].substitutes;
-    let playerImage = data[0].players[0].players;
-    let playerImage2 = data[0].players[1].players;
-    let splice1 = playerImage.splice(11, playerImage.length);
-    let splice2 = playerImage.splice(11, playerImage2.length);
-    console.log(splice1);
 
     let startingXI = '';
-    for (let i = 0; i < startXI.length; i++) {
+    for (let i = 0; i < startXI2.length; i++) {
         startingXI += `
         <div class="col-6  border-bottom border-right">
             <div class="d-flex justify-content-center align-items-center py-1 px-0 mx-0 my-1">
@@ -228,6 +235,7 @@ function getSubs() {
     document.querySelector('.line-up-sub').innerHTML = startingXI;
 }
 // getSubs();
+
 
 // get coach
 function getCoach() {
@@ -338,8 +346,74 @@ function getMatchSummary() {
 }
 getMatchSummary();
 
+// get league table
+document.querySelector('.standing').addEventListener('click', function() {
+    let leagueId = document.querySelector('.league-id').innerHTML;
+    fetch(`https://api-football-v1.p.rapidapi.com/v3/standings?season=2021&league=${leagueId}`, options)
+    .then(response => response.json())
+    .then(data => {
+        let fixtures = data['response'];
+        console.log(fixtures);
+        let tables = fixtures[0].league.standings[0];
+        let table = '';
+        for (let i = 0; i < tables.length; i++) {
+            table += `
+                                <div class="col-12 ">
+                                    <div class="row this">
+                                        <div class="col-4 clubs p-0 d-flex justify-content-start align-items-center">
+                                            <img src="${tables[i].team.logo}" alt="" class="mx-1" width="20px">
+                                            <p class="my-1 " style="font-size: 12px">${tables[i].team.name}</p>
+                                        </div>
+                                        <div class="col-8 table-rolls p-0 d-flex align-items-center">
+                                            <div class="p-0">
+                                                <p class="mx-2 my-1" style="font-size: 12px;">${tables[i].all.played}</p>
+                                            </div>
+                                            <div class="p-0">
+                                                <p class="mx-2 my-1" style="font-size: 12px;">${tables[i].all.win}</p>
+                                            </div>
+                                            <div class="p-0">
+                                                <p class="mx-2 my-1" style="font-size: 12px;">${tables[i].all.draw}</p>
+                                            </div>
+                                            <div class="p-0">
+                                                <p class="mx-2 my-1" style="font-size: 12px;">${tables[i].all.lose}</p>
+                                            </div>
+                                            <div class="p-0">
+                                                <p class="mx-2 my-1" style="font-size: 12px;">${tables[i].points}</p>
+                                            </div>
+                                            <div class="p-0">
+                                                <p class="mx-2 my-1" style="font-size: 12px;">${tables[i].all.goals.for}</p>
+                                            </div>
+                                            <div class="p-0">
+                                                <p class="mx-2 my-1" style="font-size: 12px;">${tables[i].all.goals.against}</p>
+                                            </div>
+                                            <div class="p-0">
+                                                <p class="mx-2 my-1" style="font-size: 12px;">${tables[i].goalsDiff}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+            `
+        }
+        document.querySelector('.line-up').innerHTML = table;
 
-
+        // if data[i].teams.away.name is equal to tables[i].team.name, this.classList.add('bg-secondary');
+        let thiss = document.querySelectorAll('.this');
+        let tableHome = document.querySelector('.table-home');
+        let tableAway = document.querySelector('.table-away');
+        for (let i = 0; i < thiss.length; i++) {
+            if (tables[i].team.name === tableHome.innerHTML) {
+                thiss[i].classList.add('bg-secondary');
+            }
+            else if (tables[i].team.name === tableAway.innerHTML) {
+                thiss[i].classList.add('bg-secondary');
+            }
+        }
+    })
+        document.querySelector('.tab-no-sho-1').classList.add('d-none');
+        document.querySelector('.tab-no-sho-2').classList.add('d-none');
+        document.querySelector('.tab-sho').classList.remove('d-none');
+        document.querySelector('.sub-coach').classList.add('d-none');
+} )
 
 
 
@@ -351,20 +425,26 @@ getMatchSummary();
 function switchStat() {
 	document.querySelector('.stat').addEventListener('click', function() {
 		getStat();
-        document.querySelector('.sub').classList.add('d-none');
-        document.querySelector('.coach').classList.add('d-none');
+        document.querySelector('.sub-coach').classList.add('d-none');
+        document.querySelector('.tab-no-sho-1').classList.remove('d-none');
+        document.querySelector('.tab-no-sho-2').classList.remove('d-none');
+        document.querySelector('.tab-sho').classList.add('d-none');
 	});
 	document.querySelector('.lineup').addEventListener('click', function() {
 		getLineups();
         getSubs();
         getCoach();
-        document.querySelector('.sub').classList.remove('d-none');
-        document.querySelector('.coach').classList.remove('d-none');
+        document.querySelector('.sub-coach').classList.remove('d-none');
+        document.querySelector('.tab-no-sho-1').classList.remove('d-none');
+        document.querySelector('.tab-no-sho-2').classList.remove('d-none');
+        document.querySelector('.tab-sho').classList.add('d-none');
 	});
     document.querySelector('.summary').addEventListener('click', function() {
         getMatchSummary();
-        document.querySelector('.sub').classList.add('d-none');
-        document.querySelector('.coach').classList.add('d-none');
+        document.querySelector('.sub-coach').classList.add('d-none');
+        document.querySelector('.tab-no-sho-1').classList.remove('d-none');
+        document.querySelector('.tab-no-sho-2').classList.remove('d-none');
+        document.querySelector('.tab-sho').classList.add('d-none');
 	});
 }
 switchStat();
@@ -381,10 +461,4 @@ function selectOne() {
     } );
 }
 selectOne();
-
-
-
-
-
-
 

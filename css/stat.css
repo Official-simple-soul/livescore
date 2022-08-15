@@ -15,3 +15,21 @@
 .active-stat {
     border: 1px solid white !important;
 }
+
+.table-rolls {
+    justify-content: space-between;
+}
+
+
+
+
+
+
+
+@media (max-width: 450px) {
+    .table-rolls {
+        overflow: scroll;
+        justify-content: space-between;
+    }
+
+}

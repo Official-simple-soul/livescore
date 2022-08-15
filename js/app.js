@@ -213,8 +213,8 @@ function getFixtures() {
 
 						
 }
-
 // getFixtures();
+
 
 // get live fixtures
 function getLiveFixtures() {
@@ -223,7 +223,6 @@ function getLiveFixtures() {
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
-			console.log(fixtures);
 
 			let groupBy = (array, key) => {
 				return array.reduce((objectsByKeyValue, obj) => {
