@@ -152,7 +152,7 @@ function getStat() {
                     });
 
 }
-getStat();
+// getStat();
 
 // get lineups
 
@@ -234,11 +234,11 @@ function getCoach() {
     let newObject = localStorage.getItem('stat')
     let posts = JSON.parse(newObject)
     let data = posts['response']
-    console.log(data)
+    // console.log(data)
     // loop over the starting ineup and get the player name and number
     let startXI = data[0].lineups[0].coach;
     let startXI2 = data[0].lineups[1].coach;
-    console.log(startXI);
+    // console.log(startXI);
 
     let startingXI = '';
 
@@ -260,9 +260,83 @@ function getCoach() {
 }
 // getCoach();
 
+// get match summary
+function getMatchSummary() {
+    let newObject = localStorage.getItem('stat')
+    let posts = JSON.parse(newObject)
+    let data = posts['response']
+    
+    let event1 = data[0].events;
+    let events = '';
+    for (let i = 0; i < event1.length; i++) {
+        events += `     <div class="col-12 border-bottom py-1 d-flex shift">
+                            <div>
+                                <div class="d-flex justify-content-center">
+                                    <div class="time">
+                                        <p class="mb-0 ass" style="font-size: 11px;">${event1[i].time.elapsed}'</p>
+                                    </div>
+                                    <div class="type">
+                                        <p class="mb-0 mx-2 goal-type ass" style="font-size: 11px;">${event1[i].type}</p>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="scorer ms-2">
+                                        <p class="mb-0 ass" style="font-size: 13px;">${event1[i].player.name}</p>
+                                    </div>
+                                    <div class="assist">
+                                        <p class="mx-1 mb-0 text-muted ass" style="font-size: 13px;">(${event1[i].assist.name})</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                `
+                }
+    document.querySelector('.line-up').innerHTML = events;
+    
+                // replace goal with font awesome
+                let goal = document.querySelectorAll('.goal-type');
+                for (let i = 0; i < goal.length; i++) {
+                    if (goal[i].innerHTML === 'Goal') {
+                        goal[i].innerHTML = '<i class="fas fa-futbol"></i>';
+                    }
+                }
+                
+                // replace red card with font awesome
+                let red = document.querySelectorAll('.goal-type');
+                for (let i = 0; i < red.length; i++) {
+                    if (red[i].innerHTML === 'Card' && event1[i].detail === 'Red Card') {
+                        red[i].innerHTML = '<i class="fas fa-diamond text-danger"></i>';
+                    }
+                    else if (red[i].innerHTML === 'Card' && event1[i].detail === 'Yellow Card') {
+                        red[i].innerHTML = '<i class="fas fa-diamond text-warning"></i>';
+                    }
+                }
 
-
-
+                // replace substitution with font awesome
+                let sub = document.querySelectorAll('.goal-type');
+                for (let i = 0; i < sub.length; i++) {
+                    if (sub[i].innerHTML === 'subst') {
+                        sub[i].innerHTML = '<i class="fas fa-exchange-alt"></i>';
+                    }
+                }
+                // display none if no assist
+                let assist = document.querySelectorAll('.ass');
+                for (let i = 0; i < assist.length; i++) {
+                    if (assist[i].innerHTML === '(null)' || assist[i].innerHTML === 'null') {
+                        assist[i].classList.add('d-none');
+                    }
+                }
+                // add justify content end if event.name is equal to team.away.name
+                let shift = document.querySelectorAll('.shift');
+                let dat = data[0].teams;
+                // add justify content end to col-12 if event.name is equal to team.away.name
+                for (let i = 0; i < shift.length; i++) {
+                    if (event1[i].team.name === dat.away.name) {
+                        shift[i].classList.add('justify-content-end');
+                    }
+                }
+}
+getMatchSummary();
 
 
 
@@ -287,6 +361,11 @@ function switchStat() {
         document.querySelector('.sub').classList.remove('d-none');
         document.querySelector('.coach').classList.remove('d-none');
 	});
+    document.querySelector('.summary').addEventListener('click', function() {
+        getMatchSummary();
+        document.querySelector('.sub').classList.add('d-none');
+        document.querySelector('.coach').classList.add('d-none');
+	});
 }
 switchStat();
 
@@ -302,8 +381,6 @@ function selectOne() {
     } );
 }
 selectOne();
-
-
 
 
 
