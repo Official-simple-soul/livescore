@@ -35,6 +35,7 @@ function selectNavbarItem() {
 			this.classList.add('active');
 		} );
 	} );
+	
 }
 selectNavbarItem();
 
@@ -465,45 +466,51 @@ function clickMe(id) {
 				formattedTime += ampm;
 				
 				            return `
-								<div class="col-md-12 col-12 cursour">
-									<div class="d-flex justify-content-between align-items-center my-0">
-										<div class="d-flex justify-content-start align-items-center my-1">
-											<img src="${data.teams.home.logo}" alt="" class="home-logo" width="30px">
-											<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.home.name}</h5>
-										</div>	
-										<h5 class="home-score" style="font-size: 14px">${data.score.fulltime.home}</h5>
+							<div class="col-md-12 col-12 px-0">
+							<div class="row bg-dark">
+								<div class="col-lg-12 col-12">
+									<div class="d-flex justify-content-between align-items-center my-1">
+										<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.league.country}</p>
+										<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.league.name}</p>
 									</div>
 								</div>
+							</div>
+							<div class="col-md-12 col-12 cursour" onclick="checkStat(${data.fixture.id})">
 								<div class="col-md-12 col-12">
-									<div class="d-flex justify-content-between align-items-center my-0">
-
-										<p class="time text-danger my-0 mx-3" style="font-size: 11px">${formattedTime}</p>
-										<p class="time text-danger my-0 mx-3" style="font-size: 12px">${data.fixture.status.short}</p>
-									</div>
-								</div>
-								<div class="col-md-12 col-12  cursour border-bottom border-3">
-									<div class="d-flex justify-content-between align-items-center my-0">
+									<div class="d-flex justify-content-between align-items-center my-1">
 										<div class="d-flex justify-content-start align-items-center my-1">
-											<img src="${data.teams.away.logo}" alt="" class="home-logo" width="30px">
-											<h5 class="home text-light mx-3" style="font-size: 13px">${data.teams.away.name}</h5>
+											<img src="${data.teams.home.logo}" alt="" class="home-logo" width="15px">
+											<h5 class="home text-light mx-3 my-0" style="font-size: 13px">${data.teams.home.name}</h5>
 										</div>	
-										<h5 class="away-score" style="font-size: 14px">${data.score.fulltime.away}</h5>
+										<h5 class="home-score-live text-dark fw-bold my-0" style="font-size: 13px">${data.goals.home}</h5>
 									</div>
 								</div>
+								<div class="col-md-12 col-12 border-3">
+									<p class="time text-dark my-0 mx-3 position-absolute chng" style="font-size: 11px"><span class="px-2">${formattedTime}</span>${data.fixture.status.short}'</p>
+									<div class="d-flex justify-content-between align-items-center my-1">
+										<div class="d-flex justify-content-start align-items-center my-1">
+											<img src="${data.teams.away.logo}" alt="" class="home-logo" width="15px">
+											<h5 class="home text-light mx-3 my-0" style="font-size: 13px">${data.teams.away.name}</h5>
+										</div>	
+										<h5 class="away-score-live text-dark fw-bold my-0" style="font-size: 13px">${data.goals.away}</h5>
+									</div>
+								</div>
+							</div>
+						</div>
 
 							`;
 							}).join('');
 							document.querySelector('.rowling-fixture').innerHTML = fixture;
 
 							// fixtures conditions
-							let score = document.querySelectorAll('.home-score');
+							let score = document.querySelectorAll('.home-score-live');
 							score.forEach(score => {
 								if (score.innerHTML === 'null') {
 									score.innerHTML = '?';
 								}
 							}
 							);
-							let score2 = document.querySelectorAll('.away-score');
+							let score2 = document.querySelectorAll('.away-score-live');
 							score2.forEach(score => {
 								if (score.innerHTML === 'null') {
 									score.innerHTML = '?';
