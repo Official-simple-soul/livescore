@@ -29,11 +29,11 @@ function getDetails() {
                                 </div>
                                 <div class="col-4">
                                     <div class="score text-dark">
-                                        <h3><span class="mx-2">${data[0].goals.home}</span>:<span class="mx-2">${data[0].goals.away}</span></h3>
+                                        <h3><span class="mx-2 if-null">${data[0].goals.home}</span>:<span class="mx-2 if-null">${data[0].goals.away}</span></h3>
                                     </div>
                                     <div class="status">
                                         <p class="my-0 text-dark" style="font-size: 13px">${data[0].fixture.status.long}</p>
-                                        <p class="my-0 text-dark" style="font-size: 13px">${data[0].fixture.status.elapsed}'</p>
+                                        <p class="my-0 text-dark if-nul" style="font-size: 13px">${data[0].fixture.status.elapsed}'</p>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -49,6 +49,19 @@ function getDetails() {
                         </div>`;
 
     document.querySelector('.get-stat').innerHTML = statistics;
+
+    const ifNull = document.querySelectorAll('.if-null');
+    ifNull.forEach(item => {
+    if (item.innerHTML === 'null') {
+        item.innerHTML = '?';
+    }
+    });
+
+    const ifNull2 = document.querySelector('.if-nul');
+    if (ifNull2.innerHTML === "null'") {
+        ifNull2.innerHTML = '-';
+    }
+    ;
 
 }
 getDetails();
@@ -273,10 +286,12 @@ function getMatchSummary() {
     let newObject = localStorage.getItem('stat')
     let posts = JSON.parse(newObject)
     let data = posts['response']
-    
+        // for (let i = data.length - 1; i >= 0; i--) {
+
+
     let event1 = data[0].events;
     let events = '';
-    for (let i = 0; i < event1.length; i++) {
+    for (let i = event1.length - 1; i >= 0; i--) {
         events += `     <div class="col-12 border-bottom py-1 d-flex shift">
                             <div>
                                 <div class="d-flex justify-content-center">

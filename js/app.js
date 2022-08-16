@@ -453,14 +453,13 @@ function clickMe(id) {
 		.then(response => response.json())
 		.then(data => {
 			let fixtures = data['response']
-
+			console.log(fixtures);
 			let fixture = fixtures.map(data => {
 				// converting timestamp to local time
 				let date = new Date(data.fixture.timestamp * 1000);
 				let hours = date.getHours();
 				let minutes = "0" + date.getMinutes();
 				let formattedTime = hours + ':' + minutes.substr(-2);
-
 				// add am or pm
 				let ampm = hours >= 12 ? 'pm' : 'am';
 				formattedTime += ampm;
@@ -470,8 +469,7 @@ function clickMe(id) {
 							<div class="row bg-dark">
 								<div class="col-lg-12 col-12">
 									<div class="d-flex justify-content-between align-items-center my-1">
-										<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.league.country}</p>
-										<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.league.name}</p>
+										<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.fixture.date}</p>
 									</div>
 								</div>
 							</div>
@@ -519,6 +517,11 @@ function clickMe(id) {
 							);
 
 							})
+		england.classList.add('d-none');
+		spain.classList.add('d-none');
+		germany.classList.add('d-none');
+		france.classList.add('d-none');
+		italy.classList.add('d-none');
 
 						
 }
@@ -998,3 +1001,4 @@ function getLiveFixturesItaly() {
 						})
 }
 getLiveFixturesItaly();
+
