@@ -6,6 +6,7 @@ let spain = document.querySelector(".rowling-spain");
 let germany = document.querySelector(".rowling-germany");
 let france = document.querySelector(".rowling-france");
 let italy = document.querySelector(".rowling-italy");
+let holland = document.querySelector(".rowling-holland");
 
 
 // toggle menu
@@ -536,6 +537,7 @@ function switchFixtures() {
 		germany.classList.add('d-none');
 		france.classList.add('d-none');
 		italy.classList.add('d-none');
+		holland.classList.add('d-none');
 		
 	});
 	document.querySelector('.live').addEventListener('click', function() {
@@ -546,6 +548,7 @@ function switchFixtures() {
 		germany.classList.remove('d-none');
 		france.classList.remove('d-none');
 		italy.classList.remove('d-none');
+		holland.classList.remove('d-none');
 	});
 	document.querySelector('.finished').addEventListener('click', function() {
 		getFixtures();
@@ -555,6 +558,7 @@ function switchFixtures() {
 		germany.classList.add('d-none');
 		france.classList.add('d-none');
 		italy.classList.add('d-none');
+		holland.classList.add('d-none');
 	});
 	document.querySelector('.schedule').addEventListener('click', function() {
 		getNextFixtures();
@@ -564,6 +568,7 @@ function switchFixtures() {
 		germany.classList.add('d-none');
 		france.classList.add('d-none');
 		italy.classList.add('d-none');
+		holland.classList.add('d-none');
 	});
 	document.querySelector('.more').addEventListener('click', function() {
 		getMoreData();
@@ -673,6 +678,7 @@ function getLiveFixturesEngland() {
 						})
 }
 getLiveFixturesEngland();
+
 // Bundesliga
 function getLiveFixturesSpain() {
 	
@@ -755,6 +761,7 @@ function getLiveFixturesSpain() {
 						})
 }
 getLiveFixturesSpain();
+
 // // la liga
 function getLiveFixturesGermany() {
 	
@@ -837,6 +844,7 @@ function getLiveFixturesGermany() {
 						})
 }
 getLiveFixturesGermany();
+
 // // ligue 1
 function getLiveFixturesFrance() {
 	
@@ -919,6 +927,7 @@ function getLiveFixturesFrance() {
 						})
 }
 getLiveFixturesFrance();
+
 // // serie a
 function getLiveFixturesItaly() {
 	
@@ -1001,4 +1010,88 @@ function getLiveFixturesItaly() {
 						})
 }
 getLiveFixturesItaly();
+
+// holland
+// premier league
+function getLiveFixturesHolland() {
+	
+	fetch('https://api-football-v1.p.rapidapi.com/v3/fixtures?league=88&season=2022&live=all', options)
+		.then(response => response.json())
+		.then(data => {
+			let fixtures = data['response']
+
+			let groupBy = (array, key) => {
+				return array.reduce((objectsByKeyValue, obj) => {
+					const value = obj[key];
+					objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+					return objectsByKeyValue;
+				} ,{});
+			}
+			let grouped = groupBy(fixtures, 'league_id');
+			let fixture = Object.keys(grouped).map(function(key) {
+				return grouped[key];
+			}).map(function(item) {
+				let splice = item.splice(0, 10);
+			let fixture = splice.map(data => {
+				            return `
+								<div class="col-md-12 col-12 px-0">
+									<div class="row bg-dark">
+										<div class="col-lg-12 col-12">
+											<div class="d-flex justify-content-between align-items-center my-1">
+												<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.league.country}</p>
+												<p class=" mx-3 text-light text-center mb-0" style="font-size: 13px">${data.league.name}</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12 col-12 cursour" onclick="checkStat(${data.fixture.id})">
+										<div class="col-md-12 col-12">
+											<div class="d-flex justify-content-between align-items-center my-1">
+												<div class="d-flex justify-content-start align-items-center my-1">
+													<img src="${data.teams.home.logo}" alt="" class="home-logo" width="15px">
+													<h5 class="home text-light mx-3 my-0" style="font-size: 13px">${data.teams.home.name}</h5>
+												</div>	
+												<h5 class="home-score-live text-danger fw-bold my-0" style="font-size: 13px">${data.goals.home}</h5>
+											</div>
+										</div>
+										<div class="col-md-12 col-12 border-3">
+											<p class="time text-danger my-0 mx-3 position-absolute chng" style="font-size: 11px"><span class="px-2">Live</span>${data.fixture.status.elapsed}'</p>
+											<div class="d-flex justify-content-between align-items-center my-1">
+												<div class="d-flex justify-content-start align-items-center my-1">
+													<img src="${data.teams.away.logo}" alt="" class="home-logo" width="15px">
+													<h5 class="home text-light mx-3 my-0" style="font-size: 13px">${data.teams.away.name}</h5>
+												</div>	
+												<h5 class="away-score-live text-danger fw-bold my-0" style="font-size: 13px">${data.goals.away}</h5>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+
+							`;
+			})
+			return fixture.join('');
+			
+						}).join('');
+							document.querySelector('.rowling-england').innerHTML = fixture;
+
+							// conditions for live fixtures
+							let score = document.querySelectorAll('.home-score-live');
+							score.forEach(score => {
+								if (score.innerHTML === 'null') {
+									score.innerHTML = '-';
+								}
+							}
+							);
+							let score2 = document.querySelectorAll('.away-score-live');
+							score2.forEach(score => {
+								if (score.innerHTML === 'null') {
+									score.innerHTML = '-';
+								}
+							}
+							);
+
+							// if live match is equal to null
+						})
+}
+getLiveFixturesHolland();
 
