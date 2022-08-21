@@ -28,12 +28,12 @@ function getDetails() {
                                     </div>
                                 </div>
                                 <div class="col-4">
-                                    <div class="score text-dark">
-                                        <h3><span class="mx-2 if-null">${data[0].goals.home}</span>:<span class="mx-2 if-null">${data[0].goals.away}</span></h3>
+                                    <div class="score">
+                                        <h3><span class="mx-2 if-null">${data[0].goals.home}</span><span class="if-null">:</span><span class="mx-2 if-null">${data[0].goals.away}</span></h3>
                                     </div>
                                     <div class="status">
-                                        <p class="my-0 text-dark" style="font-size: 13px">${data[0].fixture.status.long}</p>
-                                        <p class="my-0 text-dark if-nul" style="font-size: 13px">${data[0].fixture.status.elapsed}'</p>
+                                        <p class="my-0 if-null" style="font-size: 13px">${data[0].fixture.status.long}</p>
+                                        <p class="my-0 if-nul" style="font-size: 13px">${data[0].fixture.status.elapsed}'</p>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -55,19 +55,23 @@ function getDetails() {
     if (item.innerHTML === 'null') {
         item.innerHTML = '?';
     }
+
+    if (data[0].fixture.status.long === 'First Half' || data[0].fixture.status.long === 'Second Half') {
+        item.style.color = 'red';
+    }
+
     });
 
     const ifNull2 = document.querySelector('.if-nul');
     if (ifNull2.innerHTML === "null'") {
         ifNull2.innerHTML = '-';
     }
-    ;
+
     if (data[0].fixture.status.long === 'First Half' || data[0].fixture.status.long === 'Second Half') {
-        // goal color shoulb be red
         ifNull2.style.color = 'red';
-        ifNull.style.color = 'red';
     }
     ;
+    
 
 
 }
