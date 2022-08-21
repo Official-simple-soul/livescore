@@ -62,6 +62,13 @@ function getDetails() {
         ifNull2.innerHTML = '-';
     }
     ;
+    if (data[0].fixture.status.long === 'First Half' || data[0].fixture.status.long === 'Second Half') {
+        // goal color shoulb be red
+        ifNull2.style.color = 'red';
+        ifNull.style.color = 'red';
+    }
+    ;
+
 
 }
 getDetails();
